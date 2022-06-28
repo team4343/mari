@@ -1,7 +1,10 @@
+cargo-features = ["per-package-target"]
+
 [package]
 name = "mari"
 version = "0.1.0"
 edition = "2021"
+default-target = "arm-unknown-linux-gnueabi"
 
 [dependencies]
 
