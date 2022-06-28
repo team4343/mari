@@ -7,7 +7,12 @@
       root = ./.;
 
       overrides.shell = common: prev: {
-        packages = prev.packages ++ (with common.pkgs; [(pkgs.callPackage ./nix/wpilib-toolchain.nix {})]);
+        packages = prev.packages ++ (with common.pkgs; [(pkgs.callPackage ./nix/wpilib-toolchain.nix {}) cmake gnumake]);
+        env = prev.env ++ [
+          { name = "PROTOBUF_LOCATION"; eval = "${common.pkgs.protobuf}"; }
+          { name = "PROTOC";            eval = "$PROTOBUF_LOCATION/bin/protoc"; }
+          { name = "PROTOC_INCLUDE";    eval = "$PROTOBUF_LOCATION/include"; }
+        ];
       };
     };
 }

@@ -1,4 +1,4 @@
-cargo-features = ["per-package-target"]
+cargo-features = [ "per-package-target" ]
 
 [package]
 name = "mari"
@@ -7,13 +7,22 @@ edition = "2021"
 default-target = "arm-unknown-linux-gnueabi"
 
 [dependencies]
+color-eyre = "0.6.1"
+libmax = { version = "0.1.0", path = "../libmax" }
+nalgebra = "0.31.0"
+prost = "0.10.4"
+tokio = { version = "1.19.2", features = ["full"] }
+tonic = "0.7.2"
 
 [dev-dependencies]
-criterion = { version = "0.3.5", features = ["html_reports"] }
+criterion = { version = "0.3.5", features = [ "html_reports" ] }
 
 [[bench]]
 name = "example"
 harness = false
+
+[build-dependencies]
+tonic-build = "0.7.2"
 
 [package.metadata.nix]
 build = true

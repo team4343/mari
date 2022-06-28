@@ -1,0 +1,9 @@
+[package]
+name = "libmax"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+nalgebra = { version = "0.31.0", features = [ "serde-serialize" ] }
+serde = "1.0.137"
+tarpc = "0.29.0"
