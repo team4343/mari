@@ -9,10 +9,15 @@ default-target = "arm-unknown-linux-gnueabi"
 [dependencies]
 color-eyre = "0.6.1"
 libmax = { version = "0.1.0", path = "../libmax" }
+mari-protocol = { version = "0.1.0", path = "../mari-protocol" }
 nalgebra = "0.31.0"
-prost = "0.10.4"
+opentelemetry = { version = "0.17.0", features = ["rt-tokio"] }
+opentelemetry-jaeger = { version = "0.16.0", features = ["rt-tokio"] }
 tokio = { version = "1.19.2", features = ["full"] }
 tonic = "0.7.2"
+tracing = "0.1.35"
+tracing-opentelemetry = "0.17.3"
+tracing-subscriber = { version = "0.3.11", features = ["env-filter"] }
 
 [dev-dependencies]
 criterion = { version = "0.3.5", features = [ "html_reports" ] }
@@ -20,9 +25,6 @@ criterion = { version = "0.3.5", features = [ "html_reports" ] }
 [[bench]]
 name = "example"
 harness = false
-
-[build-dependencies]
-tonic-build = "0.7.2"
 
 [package.metadata.nix]
 build = true

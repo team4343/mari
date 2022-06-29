@@ -4,8 +4,8 @@ package mari;
 /* A simple, blank message. */
 message Ping {}
 
-/* A service for checking the health of the network. Does no work, and returns
- * a [`Ping`]. */
+/* A service for checking the health of the network. Does no work, and returns a
+ * [`super::super::Ping`]. */
 service Health {
   rpc ping (Ping) returns (Ping) {}
 }
