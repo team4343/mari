@@ -12,14 +12,14 @@ pub struct Robot;
 
 #[tonic::async_trait]
 impl Health for Robot {
-    async fn ping(&self, request: Request<Ping>) -> Result<Response<Ping>, Status> {
+    async fn ping(&self, _request: Request<Ping>) -> Result<Response<Ping>, Status> {
         Ok(Response::new(Ping {}))
     }
 }
 
 #[tokio::main]
 async fn main() -> color_eyre::eyre::Result<()> {
-    init_tracing()?;
+    let _tracer = init_tracing()?;
 
     let robot = Robot::default();
 

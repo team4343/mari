@@ -1,15 +1,13 @@
 pub(crate) mod util;
 
 use color_eyre::eyre::Result;
+use opentelemetry_jaeger::Error;
 use tonic::Request;
-use tracing::info;
-use tracing_subscriber::{fmt::format::FmtSpan, prelude::*};
+use tracing::{info, instrument};
 
-use crate::util::init_tracing;
-
-#[tokio::main]
-async fn main() -> Result<()> {
-    init_tracing()?;
+#[instrument]
+async fn connect() -> Result<()> {
+    info!("Connecting...");
 
     let mut health =
         mari_protocol::health_client::HealthClient::connect("http://[::1]:50051").await?;
@@ -17,6 +15,18 @@ async fn main() -> Result<()> {
     let request = Request::new(mari_protocol::Ping {});
     let response = health.ping(request).await?;
     info!("{:?}", response);
+
+    Ok(())
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let _tracer = util::setup_tracing_subscriber(util::setup_opentelemetry_jaeger()?)?;
+    let _hooks = util::setup_eyre_traced_hooks()?;
+
+    connect().await?;
+
+    util::teardown();
 
     Ok(())
 }

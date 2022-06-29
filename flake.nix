@@ -7,7 +7,7 @@
       root = ./.;
 
       overrides.shell = common: prev: {
-        packages = prev.packages ++ (with common.pkgs; [(pkgs.callPackage ./nix/wpilib-toolchain.nix {}) cmake gnumake]);
+        packages = prev.packages ++ (with common.pkgs; [(pkgs.callPackage ./nix/wpilib-toolchain.nix {}) cmake gnumake rust-analyzer]);
         env = prev.env ++ [
           { name = "PROTOBUF_LOCATION"; eval = "${common.pkgs.protobuf}"; }
           { name = "PROTOC";            eval = "$PROTOBUF_LOCATION/bin/protoc"; }
