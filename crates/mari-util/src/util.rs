@@ -12,13 +12,13 @@ use opentelemetry::{
 use tracing_subscriber::{prelude::*, util::TryInitError};
 use tracing_tree::HierarchicalLayer;
 
-pub fn setup_opentelemetry_jaeger() -> Result<Tracer, TraceError> {
+pub fn setup_opentelemetry_jaeger(service_name: String) -> Result<Tracer, TraceError> {
     global::set_text_map_propagator(TraceContextPropagator::new());
 
     opentelemetry_jaeger::new_pipeline()
         .with_service_name("mari-dashboard")
         .with_trace_config(Config::default().with_resource(Resource::new(vec![
-            KeyValue::new("service.name", "mari-dashboard-service"),
+            KeyValue::new("service.name", service_name),
             KeyValue::new("exporter", "otlp-jaeger"),
         ])))
         .install_batch(opentelemetry::runtime::Tokio)
